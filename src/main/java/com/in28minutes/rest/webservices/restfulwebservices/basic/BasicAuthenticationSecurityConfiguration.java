@@ -17,8 +17,11 @@ public class BasicAuthenticationSecurityConfiguration {
 
         return http.authorizeHttpRequests(
                 auth -> auth
-                        .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                        .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                       // .antMatchers("/**").permitAll()
+                        // .mvcMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                         .anyRequest().authenticated()
+
                 )
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -26,3 +29,24 @@ public class BasicAuthenticationSecurityConfiguration {
                 .build();
     }
 }
+/*
+        return http
+                .authorizeRequests(auth -> auth
+                    .mvcMatchers("/authenticate").permitAll()
+                    .mvcMatchers("/h2-console/**").permitAll() // h2-console is a servlet and NOT recommended for a production
+                    .mvcMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                    .anyRequest().authenticated())
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .oauth2ResourceServer(
+                        OAuth2ResourceServerConfigurer::jwt)
+                .httpBasic(
+                        Customizer.withDefaults())
+                .headers(header -> {header.frameOptions().sameOrigin();})
+                .build();
+    }
+}
+
+
+
+*/
