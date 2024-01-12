@@ -17,8 +17,6 @@ public class BasicAuthenticationSecurityConfiguration {
         return http.authorizeHttpRequests(
                 auth -> auth
                         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                       // .antMatchers("/**").permitAll()
-                        // .mvcMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                         .anyRequest().authenticated()
 
                 )
